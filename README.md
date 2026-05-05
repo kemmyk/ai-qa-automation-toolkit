@@ -5,7 +5,7 @@
 - **Contract-driven API checks** — OpenAPI feeds Postman generation and Newman so HTTP behavior is verified as the spec evolves.
 - **CI-ready defaults** — Pull requests run Newman with JSON artifacts; Playwright can join the same workflow when you flip one repository variable.
 - **AI-augmented ideation** — Specs become LLM-ready prompts for test cases and flows; engineers stay accountable for what ships.
-- **Discovery when APIs are opaque** — Safe `GET` probes and documented outcomes (for example nginx vs. 404) before you bet on strict JSON assertions.
+- **Real API smoke tests** — `postman/generated.json` runs **JSONPlaceholder** CRUD checks with strict status, JSON shape, and timing assertions—ideal for CI without a private backend.
 - **Full-stack signal** — Newman exercises **APIs**; Playwright exercises **UI**—together they reduce “green API, broken product” risk.
 - **Readable for teams and hiring managers** — One repo explains tools, commands, CI, and field results without hidden runbooks.
 
@@ -16,13 +16,13 @@
 | **API-first QA** | Catches contract drift early; UI tests alone rarely fail when payloads or status codes change upstream. |
 | **CI/CD automation** | The Newman command you run locally is the same one GitHub Actions runs—fewer “works on my machine” gaps. |
 | **AI-assisted testing** | LLMs scale brainstorming for cases, data, and copy-pastable checks from OpenAPI; humans curate, prioritize, and own risk. |
-| **Unknown or non-public APIs** | Discovery collections and written findings describe what the host *actually* returns so you do not pretend a TODO CRUD exists on every base URL. |
+| **Predictable public fixtures** | JSONPlaceholder gives repeatable HTTP behavior for Newman so PR checks validate real request/response flows without standing up your own mock server. |
 
 ## Overview
 
 The **AI QA Automation Toolkit** is a Node.js project for **spec-driven quality engineering**. It ties together **OpenAPI** definitions, **Postman** collections, **Newman** command-line runs (with JSON reporting), optional **Playwright** browser tests, and **GitHub Actions** so API checks can run on every pull request. A small **LLM prompt generator** helps turn OpenAPI into structured text you can feed to AI assistants or human reviewers for test ideas—without replacing your own judgment or security review.
 
-The toolkit favors **repeatable automation**, **clear failure signals** (non-zero exits when assertions fail), and **documentation** that explains not only how to run jobs, but what was learned when probing real hosts (for example public discovery against a pentest API base URL).
+The toolkit favors **repeatable automation**, **clear failure signals** (non-zero exits when assertions fail), and **documentation** that explains how to run jobs and what each collection is meant to prove.
 
 ### AI-assisted quality workflow
 
@@ -77,7 +77,7 @@ flowchart LR
 |--------|------|
 | **OpenAPI** | `openapi/openapi.yaml` and `openapi/spec.json` describe or approximate the API surface. |
 | **Generation** | `npm run generate:postman` / `npm run generate:postman:local` convert specs into Postman Collection v2.1 JSON using **openapi-to-postmanv2**. |
-| **Postman** | `postman/collection.json` (hand-maintained or merged suites) and `postman/generated.json` (discovery or spec-derived) plus **environments** (`postman/environment.json`). |
+| **Postman** | `postman/collection.json` and `postman/generated.json` (same **JSONPlaceholder** `/posts` CRUD suite; `generated.json` can be overwritten by `npm run generate:postman:local` from `openapi/spec.json`) plus **environments** (`postman/environment.json`). |
 | **Newman** | Runs the same collection locally or in CI; **fails the process** when any `pm.test` fails. |
 | **CI** | `.github/workflows/newman.yml` installs dependencies, runs Newman, uploads the JSON report artifact, and optionally runs Playwright when enabled. |
 
@@ -89,9 +89,9 @@ Playwright sits **beside** this pipeline for **UI-level** checks (`playwright-te
 
 | Capability | Description |
 |------------|-------------|
-| **OpenAPI sources** | Dual specs: YAML for Petstore-style generation and JSON samples for local conversion experiments. |
+| **OpenAPI sources** | Dual specs: YAML and JSON under `openapi/` for `openapi-to-postmanv2` generation (independent of the hand-maintained Newman collections in `postman/`). |
 | **Postman + Newman** | Runnable collections with test scripts; Newman emits **CLI + JSON** output for CI artifacts. |
-| **Discovery collection** | Safe `GET` probes against `{{baseUrl}}` and common doc/API paths; assertions allow **200 / 401 / 403 / 404** without assuming a JSON API. |
+| **JSONPlaceholder CI collection** | `postman/generated.json` exercises **GET/POST/PUT/DELETE** on `/posts` with strict JSON and timing checks; see [Real API Testing using JSONPlaceholder](#real-api-testing-using-jsonplaceholder). |
 | **Playwright** | Browser E2E (`BASE_URL`): navigation, content, and error UX—pairs with Newman for **API + UI** coverage. |
 | **LLM-oriented prompts** | `npm run generate:qa-prompts` builds `llm-generator/output/qa-prompt.md` from `openapi/openapi.yaml`. |
 | **GitHub Actions** | PR workflow for Newman; optional Playwright job gated by a repository variable. |
@@ -122,7 +122,7 @@ Playwright sits **beside** this pipeline for **UI-level** checks (`playwright-te
 
 4. **Postman environment**
 
-   Set **`baseUrl`** in `postman/environment.json` (or `postman/generated.environment.json`) to the host you intend to hit. The default discovery configuration targets **`https://api-pentest.balador.io`**.
+   Set **`baseUrl`** in `postman/environment.json` (or `postman/generated.environment.json`) to match your target host. The default for **`postman/generated.json`** is **`https://jsonplaceholder.typicode.com`**.
 
 5. **Regenerate collections (when specs change)**
 
@@ -140,7 +140,7 @@ Further orientation is in [docs/getting-started.md](docs/getting-started.md).
 | Step | Command / action | What you should see |
 |------|------------------|---------------------|
 | **1. Generate a Postman collection** | `npm run generate:postman` or `npm run generate:postman:local` | `postman/collection.json` or `postman/generated.json` updated from OpenAPI. |
-| **2. Run Newman locally** | `npm run test:newman:ci` (discovery) or `npm run test:newman` (main collection) | CLI assertion table; **`newman-report.json`** on disk for the CI script variant. |
+| **2. Run Newman locally** | `npm run test:newman:ci` (JSONPlaceholder `generated.json`) or `npm run test:newman` (main collection) | CLI assertion table; **`newman-report.json`** on disk for the CI script variant. |
 | **3. View reports** | Open **`newman-report.json`** in an editor or JSON viewer; download the **`newman-report`** artifact from a GitHub Actions run | Per-request stats, timings, and failed assertion details. |
 | **4. CI execution** | Open a pull request; watch **API & E2E tests** workflow | Newman job passes or fails with logs; artifact available even when debugging failures. |
 | **5. Optional Playwright** | Set repo variable **`RUN_PLAYWRIGHT=true`**, ensure **`BASE_URL`** targets your app, re-run PR checks | Second job installs Chromium and runs **`npm run test:e2e`**; HTML report artifact on failure. |
@@ -153,7 +153,7 @@ Further orientation is in [docs/getting-started.md](docs/getting-started.md).
 
 | Command | When to use |
 |---------|-------------|
-| `npm run test:newman:ci` | **Discovery** collection `postman/generated.json` + `postman/environment.json`; writes **`newman-report.json`**. |
+| `npm run test:newman:ci` | **`postman/generated.json`** (JSONPlaceholder posts CRUD) + `postman/environment.json`; writes **`newman-report.json`**. |
 | `npm run test:newman` | Main **`postman/collection.json`** via `scripts/run-newman.js` with the same environment file; loads **`.env`**. |
 | `npm run test:newman:verbose` | Same as above with verbose Newman output. |
 
@@ -218,7 +218,7 @@ The figures below use **SVG placeholders** in [`docs/images/`](docs/images/). Re
 
 | Area in the output | Meaning |
 |--------------------|---------|
-| **Iteration / request name** | Which Postman request ran (for example `API Discovery`, `GET /api`). |
+| **Iteration / request name** | Which Postman request ran (for example `GET /posts`, `POST /posts`). |
 | **`✓` / `✗` next to test names** | Individual **`pm.test`** blocks succeeded or failed. |
 | **`response time`** (if shown) | Wall-clock for that request; the collection caps expectations (for example under 2000 ms). |
 | **Exit code `0` vs `1`** | **`0`** = all assertions passed; **`1`** = at least one failure—CI should treat **`1`** as a failed build. |
@@ -260,32 +260,29 @@ The figures below use **SVG placeholders** in [`docs/images/`](docs/images/). Re
 
 ---
 
-### Reading discovery runs (no screenshot required)
+## Real API Testing using JSONPlaceholder
 
-Discovery requests also **`console.log`** each response body in Postman or Newman. In the log stream you should see:
+The **`postman/generated.json`** collection is configured for **[JSONPlaceholder](https://jsonplaceholder.typicode.com/)**—a free, documented **fake REST API** used for learning and automation. **`baseUrl`** defaults to **`https://jsonplaceholder.typicode.com`** (also set in `postman/environment.json` for Newman).
 
-| Log content | What it indicates |
-|-------------|---------------------|
-| **HTML mentioning nginx** on **`GET /`** | Host is up; default web root, not necessarily your API. |
-| **Short HTML or text on `404`** paths | Path not served; compare with your expected base path or auth requirements. |
-| **Non-empty body** | Matches the collection test that requires a body so **pure silent 404** with zero bytes would fail the test—adjust if your API legitimately returns empty bodies. |
+### CRUD coverage
 
----
+| Request | Asserted behavior |
+|---------|-------------------|
+| **GET `/posts`** | **HTTP 200**; response is JSON **array**; first item includes **`id`**, **`title`**, **`body`**; response time **&lt; 2000 ms**. |
+| **GET `/posts/1`** | **HTTP 200**; JSON **object** with **`id`**, **`title`**, **`body`**; timing under cap. |
+| **POST `/posts`** | **HTTP 201** with a JSON body; created resource includes **`id`**, **`title`**, **`body`**; timing under cap. |
+| **PUT `/posts/1`** | **HTTP 200**; updated resource includes **`id`**, **`title`**, **`body`**; timing under cap. |
+| **DELETE `/posts/1`** | **HTTP 200 or 204**; response is JSON (JSONPlaceholder returns an **empty object** `{}` on success); timing under cap. |
 
-## API discovery findings (nginx + 404 results)
+Run the same suite locally or in CI:
 
-Public, unauthenticated probes against **`https://api-pentest.balador.io`** (aligned with **`postman/generated.json`** discovery requests) show:
+```bash
+npm run test:newman:ci
+```
 
-| Observation | Detail |
-|---------------|--------|
-| **`GET /`** | **HTTP 200** with the **default nginx welcome HTML**—the host responds, but the root is not a product API. |
-| **Common API and doc paths** (`/api`, `/v1`, `/api/v1`, `/swagger`, `/docs`, `/openapi.json`) | **HTTP 404** (or equivalent not-found behavior), typically **small HTML or text** error pages—not OpenAPI JSON or a versioned REST root. |
-| **Edge / CDN** | Responses are often served via **Cloudflare** in front of nginx (visible in response headers during live checks). |
-| **Bodies** | Responses are generally **non-empty** HTML, which matches the discovery collection’s non-empty body assertion. |
+### Expected fake behavior (no persistence)
 
-**Conclusion:** There is **no evidence** of a **public, discoverable REST API** at those conventional paths without VPN, internal routing, API keys, or documentation from the service owner. For external black-box testing, the **application API is not publicly exposed** at standard URLs on this host; only the nginx default page at **`/`** is clearly confirmed.
-
-Extended narrative and methodology: **[docs/api-discovery.md](docs/api-discovery.md)**.
+JSONPlaceholder **simulates** success: **POST**, **PUT**, and **DELETE** return plausible status codes and bodies, but **nothing is stored** on the server. Re-running the collection always sees the same canonical dataset (for example **`GET /posts/1`** still returns the original post after a “delete”). Treat it as **contract and client wiring** validation, not data durability or integration with a real database.
 
 ---
 
@@ -293,9 +290,9 @@ Extended narrative and methodology: **[docs/api-discovery.md](docs/api-discovery
 
 | Direction | Benefit |
 |-----------|---------|
-| **Wire CI to a known-good API** | Point Newman at a stable mock or staging OpenAPI-backed service so PR checks assert **strict** status codes and JSON schemas instead of discovery-only tolerance. |
+| **Wire CI to your own API** | Keep JSONPlaceholder for demos; add a second Newman job or environment targeting **staging** with strict schemas once your backend is available. |
 | **Publish OpenAPI to a registry** | Single source of truth; auto-sync Postman via your organization’s Postman / Spec Hub flow. |
-| **Split environments** | Separate `environment.petstore.json` vs `environment.discovery.json` so the main **`collection.json`** and discovery **`generated.json`** never share a mismatched `baseUrl`. |
+| **Split environments** | Use different **`postman/environment*.json`** files if **`baseUrl`** differs per pipeline (both **`collection.json`** and **`generated.json`** target JSONPlaceholder by default). |
 | **Playwright in default CI** | Enable **`RUN_PLAYWRIGHT`** once `BASE_URL` targets a reliable staging app; add trace-on-retry and artifact upload on success for trend analysis. |
 | **Security and contract tests** | Add Newman checks for auth headers, rate limits, and negative cases generated from OpenAPI `securitySchemes` and error models. |
 | **Reporting** | Add Newman HTML or JUnit reporters alongside JSON for faster human triage in CI logs. |
@@ -312,7 +309,7 @@ Extended narrative and methodology: **[docs/api-discovery.md](docs/api-discovery
 | `playwright-tests/` | E2E specs |
 | `scripts/` | Newman runner, OpenAPI → Postman generators |
 | `llm-generator/` | Prompt templates and `output/` |
-| `docs/` | Getting started, API discovery write-up, [`docs/images/`](docs/images/) README figures |
+| `docs/` | Getting started, optional technical notes (for example [`docs/api-discovery.md`](docs/api-discovery.md)), [`docs/images/`](docs/images/) README figures |
 | `.github/workflows/` | CI definitions |
 
 ---

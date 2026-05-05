@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="200" viewBox="0 0 720 200">
+  <rect width="100%" height="100%" fill="#ffffff" stroke="#d0d7de"/>
+  <text x="24" y="42" fill="#24292f" font-family="Segoe UI,sans-serif" font-size="15" font-weight="600">Placeholder  GitHub Actions workflow run</text>
+  <text x="24" y="74" fill="#57606a" font-family="Segoe UI,sans-serif" font-size="12">’ expect: jobs Newman / Playwright, green check or red X, artifacts</text>
+  <text x="24" y="108" fill="#1a7f37" font-family="Consolas,Monaco,monospace" font-size="11">API &amp; E2E tests · pull_request · newman-report artifact</text>
+  <text x="24" y="150" fill="#57606a" font-family="Segoe UI,sans-serif" font-size="11">Replace with screenshot of Actions tab ’ workflow run ’ job summary.</text>
+</svg>

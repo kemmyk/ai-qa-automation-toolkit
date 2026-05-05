@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="200" viewBox="0 0 720 200">
+  <rect width="100%" height="100%" fill="#1e1e1e"/>
+  <text x="24" y="44" fill="#9cdcfe" font-family="Consolas,Monaco,monospace" font-size="14">Placeholder  replace with screenshot: Newman CLI</text>
+  <text x="24" y="72" fill="#ce9178" font-family="Consolas,Monaco,monospace" font-size="12">’ expect: request names,  assertions, exit code 0</text>
+  <text x="24" y="100" fill="#6a9955" font-family="Consolas,Monaco,monospace" font-size="12">newman run & --reporters cli,json</text>
+  <text x="24" y="140" fill="#858585" font-family="Segoe UI,sans-serif" font-size="11">Save export as docs/images/fig-newman-cli.png and update README link if you prefer PNG.</text>
+</svg>

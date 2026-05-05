@@ -1,10 +1,10 @@
 {
-  "id": "todo-api-env-local",
-  "name": "api-pentest.balador.io",
+  "id": "jsonplaceholder-env",
+  "name": "jsonplaceholder.typicode.com",
   "values": [
     {
       "key": "baseUrl",
-      "value": "https://api-pentest.balador.io",
+      "value": "https://jsonplaceholder.typicode.com",
       "type": "default",
       "enabled": true
     }

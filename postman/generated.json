@@ -1,23 +1,27 @@
 {
   "info": {
-    "_postman_id": "8ca54166-2a15-4114-9e6d-df2092e8a096",
-    "name": "Balador pentest API (discovery)",
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "name": "JSONPlaceholder — Posts API",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "description": {
-      "content": "Discovery requests against {{baseUrl}}. Set baseUrl in the active environment (e.g. postman/environment.json).",
+      "content": "CRUD API tests against JSONPlaceholder typicode /posts.",
       "type": "text/plain"
     }
   },
   "item": [
     {
-      "name": "Discovery",
+      "name": "posts",
       "item": [
         {
-          "name": "API Discovery",
+          "name": "GET /posts",
           "request": {
             "method": "GET",
             "header": [],
-            "url": "{{baseUrl}}/"
+            "url": {
+              "raw": "{{baseUrl}}/posts",
+              "host": ["{{baseUrl}}"],
+              "path": ["posts"]
+            }
           },
           "event": [
             {
@@ -25,32 +29,36 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "var bodyText = pm.response.text();",
-                  "console.log(pm.request.url.toString() + ' — Response body:', bodyText);",
-                  "",
-                  "pm.test('status is one of 200, 401, 403, 404', function () {",
-                  "  pm.expect([200, 401, 403, 404]).to.include(pm.response.code);",
+                  "pm.test(\"Status is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
                   "});",
-                  "",
-                  "pm.test('response time is under 2000ms', function () {",
+                  "pm.test(\"Response time under 2000ms\", function () {",
                   "  pm.expect(pm.response.responseTime).to.be.below(2000);",
                   "});",
-                  "",
-                  "pm.test('response body is not empty', function () {",
-                  "  pm.expect(bodyText.length).to.be.above(0);",
+                  "pm.test(\"Response is JSON\", function () {",
+                  "  pm.response.to.be.json;",
+                  "});",
+                  "pm.test(\"Response contains id, title, body\", function () {",
+                  "  const data = pm.response.json();",
+                  "  pm.expect(data).to.be.an(\"array\");",
+                  "  pm.expect(data.length).to.be.above(0);",
+                  "  pm.expect(data[0]).to.include.keys(\"id\", \"title\", \"body\");",
                   "});"
                 ]
               }
             }
-          ],
-          "response": []
+          ]
         },
         {
-          "name": "GET /api",
+          "name": "GET /posts/1",
           "request": {
             "method": "GET",
             "header": [],
-            "url": "{{baseUrl}}/api"
+            "url": {
+              "raw": "{{baseUrl}}/posts/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["posts", "1"]
+            }
           },
           "event": [
             {
@@ -58,32 +66,48 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "var bodyText = pm.response.text();",
-                  "console.log(pm.request.url.toString() + ' — Response body:', bodyText);",
-                  "",
-                  "pm.test('status is one of 200, 401, 403, 404', function () {",
-                  "  pm.expect([200, 401, 403, 404]).to.include(pm.response.code);",
+                  "pm.test(\"Status is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
                   "});",
-                  "",
-                  "pm.test('response time is under 2000ms', function () {",
+                  "pm.test(\"Response time under 2000ms\", function () {",
                   "  pm.expect(pm.response.responseTime).to.be.below(2000);",
                   "});",
-                  "",
-                  "pm.test('response body is not empty', function () {",
-                  "  pm.expect(bodyText.length).to.be.above(0);",
+                  "pm.test(\"Response is JSON\", function () {",
+                  "  pm.response.to.be.json;",
+                  "});",
+                  "pm.test(\"Response contains id, title, body\", function () {",
+                  "  const data = pm.response.json();",
+                  "  pm.expect(data).to.include.keys(\"id\", \"title\", \"body\");",
                   "});"
                 ]
               }
             }
-          ],
-          "response": []
+          ]
         },
         {
-          "name": "GET /v1",
+          "name": "POST /posts",
           "request": {
-            "method": "GET",
-            "header": [],
-            "url": "{{baseUrl}}/v1"
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"test title\",\n  \"body\": \"test body\",\n  \"userId\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/posts",
+              "host": ["{{baseUrl}}"],
+              "path": ["posts"]
+            }
           },
           "event": [
             {
@@ -91,32 +115,45 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "var bodyText = pm.response.text();",
-                  "console.log(pm.request.url.toString() + ' — Response body:', bodyText);",
-                  "",
-                  "pm.test('status is one of 200, 401, 403, 404', function () {",
-                  "  pm.expect([200, 401, 403, 404]).to.include(pm.response.code);",
+                  "pm.test(\"Status is 201\", function () {",
+                  "  pm.response.to.have.status(201);",
                   "});",
-                  "",
-                  "pm.test('response time is under 2000ms', function () {",
+                  "pm.test(\"Response time under 2000ms\", function () {",
                   "  pm.expect(pm.response.responseTime).to.be.below(2000);",
                   "});",
-                  "",
-                  "pm.test('response body is not empty', function () {",
-                  "  pm.expect(bodyText.length).to.be.above(0);",
+                  "pm.test(\"Response contains id\", function () {",
+                  "  const data = pm.response.json();",
+                  "  pm.expect(data).to.have.property(\"id\");",
                   "});"
                 ]
               }
             }
-          ],
-          "response": []
+          ]
         },
         {
-          "name": "GET /api/v1",
+          "name": "PUT /posts/1",
           "request": {
-            "method": "GET",
-            "header": [],
-            "url": "{{baseUrl}}/api/v1"
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"test title\",\n  \"body\": \"test body\",\n  \"userId\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/posts/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["posts", "1"]
+            }
           },
           "event": [
             {
@@ -124,32 +161,31 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "var bodyText = pm.response.text();",
-                  "console.log(pm.request.url.toString() + ' — Response body:', bodyText);",
-                  "",
-                  "pm.test('status is one of 200, 401, 403, 404', function () {",
-                  "  pm.expect([200, 401, 403, 404]).to.include(pm.response.code);",
+                  "pm.test(\"Status is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
                   "});",
-                  "",
-                  "pm.test('response time is under 2000ms', function () {",
+                  "pm.test(\"Response time under 2000ms\", function () {",
                   "  pm.expect(pm.response.responseTime).to.be.below(2000);",
                   "});",
-                  "",
-                  "pm.test('response body is not empty', function () {",
-                  "  pm.expect(bodyText.length).to.be.above(0);",
+                  "pm.test(\"Updated title exists\", function () {",
+                  "  const data = pm.response.json();",
+                  "  pm.expect(data.title).to.eql(\"test title\");",
                   "});"
                 ]
               }
             }
-          ],
-          "response": []
+          ]
         },
         {
-          "name": "GET /swagger",
+          "name": "DELETE /posts/1",
           "request": {
-            "method": "GET",
+            "method": "DELETE",
             "header": [],
-            "url": "{{baseUrl}}/swagger"
+            "url": {
+              "raw": "{{baseUrl}}/posts/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["posts", "1"]
+            }
           },
           "event": [
             {
@@ -157,100 +193,26 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "var bodyText = pm.response.text();",
-                  "console.log(pm.request.url.toString() + ' — Response body:', bodyText);",
-                  "",
-                  "pm.test('status is one of 200, 401, 403, 404', function () {",
-                  "  pm.expect([200, 401, 403, 404]).to.include(pm.response.code);",
+                  "pm.test(\"Status is 200 or 204\", function () {",
+                  "  pm.expect([200, 204]).to.include(pm.response.code);",
                   "});",
-                  "",
-                  "pm.test('response time is under 2000ms', function () {",
+                  "pm.test(\"Response time under 2000ms\", function () {",
                   "  pm.expect(pm.response.responseTime).to.be.below(2000);",
-                  "});",
-                  "",
-                  "pm.test('response body is not empty', function () {",
-                  "  pm.expect(bodyText.length).to.be.above(0);",
                   "});"
                 ]
               }
             }
-          ],
-          "response": []
-        },
-        {
-          "name": "GET /docs",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": "{{baseUrl}}/docs"
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "var bodyText = pm.response.text();",
-                  "console.log(pm.request.url.toString() + ' — Response body:', bodyText);",
-                  "",
-                  "pm.test('status is one of 200, 401, 403, 404', function () {",
-                  "  pm.expect([200, 401, 403, 404]).to.include(pm.response.code);",
-                  "});",
-                  "",
-                  "pm.test('response time is under 2000ms', function () {",
-                  "  pm.expect(pm.response.responseTime).to.be.below(2000);",
-                  "});",
-                  "",
-                  "pm.test('response body is not empty', function () {",
-                  "  pm.expect(bodyText.length).to.be.above(0);",
-                  "});"
-                ]
-              }
-            }
-          ],
-          "response": []
-        },
-        {
-          "name": "GET /openapi.json",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": "{{baseUrl}}/openapi.json"
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "var bodyText = pm.response.text();",
-                  "console.log(pm.request.url.toString() + ' — Response body:', bodyText);",
-                  "",
-                  "pm.test('status is one of 200, 401, 403, 404', function () {",
-                  "  pm.expect([200, 401, 403, 404]).to.include(pm.response.code);",
-                  "});",
-                  "",
-                  "pm.test('response time is under 2000ms', function () {",
-                  "  pm.expect(pm.response.responseTime).to.be.below(2000);",
-                  "});",
-                  "",
-                  "pm.test('response body is not empty', function () {",
-                  "  pm.expect(bodyText.length).to.be.above(0);",
-                  "});"
-                ]
-              }
-            }
-          ],
-          "response": []
+          ]
         }
       ]
     }
   ],
+  "event": [],
   "variable": [
     {
       "key": "baseUrl",
-      "value": "https://api-pentest.balador.io"
+      "value": "https://jsonplaceholder.typicode.com",
+      "type": "string"
     }
-  ],
-  "event": []
+  ]
 }
