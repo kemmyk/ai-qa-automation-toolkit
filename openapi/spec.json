@@ -1,0 +1,53 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Todo API",
+      "version": "1.0.0"
+    },
+    "paths": {
+      "/todos": {
+        "get": {
+          "summary": "Get all todos",
+          "responses": {
+            "200": {
+              "description": "List of todos"
+            }
+          }
+        },
+        "post": {
+          "summary": "Create todo",
+          "responses": {
+            "201": {
+              "description": "Created"
+            }
+          }
+        }
+      },
+      "/todos/{id}": {
+        "get": {
+          "summary": "Get todo",
+          "responses": {
+            "200": {
+              "description": "Single todo"
+            }
+          }
+        },
+        "put": {
+          "summary": "Update todo",
+          "responses": {
+            "200": {
+              "description": "Updated"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete todo",
+          "responses": {
+            "204": {
+              "description": "Deleted"
+            }
+          }
+        }
+      }
+    }
+  }

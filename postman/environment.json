@@ -1,0 +1,13 @@
+{
+  "id": "ai-qa-env-local",
+  "name": "AI QA — local",
+  "values": [
+    {
+      "key": "baseUrl",
+      "value": "https://api-pentest.balador.io",
+      "type": "default",
+      "enabled": true
+    }
+  ],
+  "_postman_variable_scope": "environment"
+}

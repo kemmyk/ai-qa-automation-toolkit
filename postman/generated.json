@@ -1,0 +1,256 @@
+{
+  "info": {
+    "_postman_id": "8ca54166-2a15-4114-9e6d-df2092e8a096",
+    "name": "Balador pentest API (discovery)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Discovery requests against {{baseUrl}}. Set baseUrl in the active environment (e.g. postman/environment.json).",
+      "type": "text/plain"
+    }
+  },
+  "item": [
+    {
+      "name": "Discovery",
+      "item": [
+        {
+          "name": "API Discovery",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var bodyText = pm.response.text();",
+                  "console.log(pm.request.url.toString() + ' — Response body:', bodyText);",
+                  "",
+                  "pm.test('status is one of 200, 401, 403, 404', function () {",
+                  "  pm.expect([200, 401, 403, 404]).to.include(pm.response.code);",
+                  "});",
+                  "",
+                  "pm.test('response time is under 2000ms', function () {",
+                  "  pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "});",
+                  "",
+                  "pm.test('response body is not empty', function () {",
+                  "  pm.expect(bodyText.length).to.be.above(0);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "GET /api",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var bodyText = pm.response.text();",
+                  "console.log(pm.request.url.toString() + ' — Response body:', bodyText);",
+                  "",
+                  "pm.test('status is one of 200, 401, 403, 404', function () {",
+                  "  pm.expect([200, 401, 403, 404]).to.include(pm.response.code);",
+                  "});",
+                  "",
+                  "pm.test('response time is under 2000ms', function () {",
+                  "  pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "});",
+                  "",
+                  "pm.test('response body is not empty', function () {",
+                  "  pm.expect(bodyText.length).to.be.above(0);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "GET /v1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/v1"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var bodyText = pm.response.text();",
+                  "console.log(pm.request.url.toString() + ' — Response body:', bodyText);",
+                  "",
+                  "pm.test('status is one of 200, 401, 403, 404', function () {",
+                  "  pm.expect([200, 401, 403, 404]).to.include(pm.response.code);",
+                  "});",
+                  "",
+                  "pm.test('response time is under 2000ms', function () {",
+                  "  pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "});",
+                  "",
+                  "pm.test('response body is not empty', function () {",
+                  "  pm.expect(bodyText.length).to.be.above(0);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "GET /api/v1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var bodyText = pm.response.text();",
+                  "console.log(pm.request.url.toString() + ' — Response body:', bodyText);",
+                  "",
+                  "pm.test('status is one of 200, 401, 403, 404', function () {",
+                  "  pm.expect([200, 401, 403, 404]).to.include(pm.response.code);",
+                  "});",
+                  "",
+                  "pm.test('response time is under 2000ms', function () {",
+                  "  pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "});",
+                  "",
+                  "pm.test('response body is not empty', function () {",
+                  "  pm.expect(bodyText.length).to.be.above(0);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "GET /swagger",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/swagger"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var bodyText = pm.response.text();",
+                  "console.log(pm.request.url.toString() + ' — Response body:', bodyText);",
+                  "",
+                  "pm.test('status is one of 200, 401, 403, 404', function () {",
+                  "  pm.expect([200, 401, 403, 404]).to.include(pm.response.code);",
+                  "});",
+                  "",
+                  "pm.test('response time is under 2000ms', function () {",
+                  "  pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "});",
+                  "",
+                  "pm.test('response body is not empty', function () {",
+                  "  pm.expect(bodyText.length).to.be.above(0);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "GET /docs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/docs"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var bodyText = pm.response.text();",
+                  "console.log(pm.request.url.toString() + ' — Response body:', bodyText);",
+                  "",
+                  "pm.test('status is one of 200, 401, 403, 404', function () {",
+                  "  pm.expect([200, 401, 403, 404]).to.include(pm.response.code);",
+                  "});",
+                  "",
+                  "pm.test('response time is under 2000ms', function () {",
+                  "  pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "});",
+                  "",
+                  "pm.test('response body is not empty', function () {",
+                  "  pm.expect(bodyText.length).to.be.above(0);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "GET /openapi.json",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/openapi.json"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var bodyText = pm.response.text();",
+                  "console.log(pm.request.url.toString() + ' — Response body:', bodyText);",
+                  "",
+                  "pm.test('status is one of 200, 401, 403, 404', function () {",
+                  "  pm.expect([200, 401, 403, 404]).to.include(pm.response.code);",
+                  "});",
+                  "",
+                  "pm.test('response time is under 2000ms', function () {",
+                  "  pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "});",
+                  "",
+                  "pm.test('response body is not empty', function () {",
+                  "  pm.expect(bodyText.length).to.be.above(0);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api-pentest.balador.io"
+    }
+  ],
+  "event": []
+}

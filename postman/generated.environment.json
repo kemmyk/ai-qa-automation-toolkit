@@ -1,0 +1,13 @@
+{
+  "id": "todo-api-env-local",
+  "name": "api-pentest.balador.io",
+  "values": [
+    {
+      "key": "baseUrl",
+      "value": "https://api-pentest.balador.io",
+      "type": "default",
+      "enabled": true
+    }
+  ],
+  "_postman_variable_scope": "environment"
+}

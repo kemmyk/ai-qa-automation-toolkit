@@ -1,0 +1,30 @@
+{
+  "name": "ai-qa-automation-toolkit",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AI QA automation toolkit: OpenAPI, LLM-assisted generation, Postman/Newman, Playwright E2E",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test:e2e": "playwright test",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:debug": "playwright test --debug",
+    "test:newman": "node scripts/run-newman.js",
+    "test:newman:verbose": "node scripts/run-newman.js --verbose",
+    "test:newman:ci": "newman run postman/generated.json -e postman/environment.json --reporters cli,json --reporter-json-export newman-report.json",
+    "generate:postman": "node scripts/generate-postman.js",
+    "generate:postman:local": "node scripts/generate-postman-local.js",
+    "generate:qa-prompts": "node llm-generator/generate-qa-prompts.js",
+    "postinstall": "playwright install chromium"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0",
+    "dotenv": "^16.4.5",
+    "js-yaml": "^4.1.0",
+    "newman": "^6.2.0",
+    "openapi-to-postmanv2": "^4.14.0"
+  }
+}
