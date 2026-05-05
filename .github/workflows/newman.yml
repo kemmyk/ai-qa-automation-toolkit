@@ -41,6 +41,7 @@ jobs:
 
   playwright-e2e:
     name: Playwright E2E
+    needs: []
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
