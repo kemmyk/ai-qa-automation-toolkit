@@ -39,11 +39,8 @@ jobs:
           if-no-files-found: ignore
           retention-days: 14
 
-  # Enable by creating a repository variable RUN_PLAYWRIGHT = true
-  # (Settings → Secrets and variables → Actions → Variables).
   playwright-e2e:
     name: Playwright E2E
-    if: ${{ vars.RUN_PLAYWRIGHT == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
