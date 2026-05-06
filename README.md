@@ -26,7 +26,7 @@ The toolkit favors **repeatable automation**, **clear failure signals** (non-zer
 
 ### AI-assisted quality workflow
 
-**Offline (no LLM):** `npm run generate:postman` and `npm run generate:postman:local` use **openapi-to-postmanv2** to turn **`openapi/openapi.yaml`** or **`openapi/spec.json`** into Postman Collection v2.1 JSON. Run Newman immediately—no network LLM call required.
+**Offline (no LLM):** `npm run generate:postman` and `npm run generate:postman:local` use **openapi-to-postmanv2** to turn **`openapi/openapi.yaml`** or **`openapi/spec.json`** into Postman Collection v2.1 JSON. The local generator now writes to **`postman/openapi.generated.json`** by default so CI's **`postman/generated.json`** is not overwritten.
 
 **AI-enhanced:** `npm run generate:qa-prompts` emits **`llm-generator/output/qa-prompt.md`**—a structured brief listing endpoints so an LLM can propose **positive, negative, and edge** tests, Newman assertions, and Playwright journeys. Typical path: **OpenAPI → prompt file → paste into your LLM → refine output → implement in Postman / Playwright / code**. Templates under **`llm-generator/prompt-templates/`** keep tone consistent when you edit prompts by hand.
 
@@ -77,7 +77,7 @@ flowchart LR
 |--------|------|
 | **OpenAPI** | `openapi/openapi.yaml` and `openapi/spec.json` describe or approximate the API surface. |
 | **Generation** | `npm run generate:postman` / `npm run generate:postman:local` convert specs into Postman Collection v2.1 JSON using **openapi-to-postmanv2**. |
-| **Postman** | `postman/collection.json` and `postman/generated.json` (same **JSONPlaceholder** `/posts` CRUD suite; `generated.json` can be overwritten by `npm run generate:postman:local` from `openapi/spec.json`) plus **environments** (`postman/environment.json`). |
+| **Postman** | `postman/collection.json` and `postman/generated.json` (same **JSONPlaceholder** `/posts` CRUD suite) plus **environments** (`postman/environment.json`). OpenAPI local generation writes to `postman/openapi.generated.json` by default. |
 | **Newman** | Runs the same collection locally or in CI; **fails the process** when any `pm.test` fails. |
 | **CI** | `.github/workflows/newman.yml` installs dependencies, runs Newman, uploads the JSON report artifact, and optionally runs Playwright when enabled. |
 
@@ -128,7 +128,7 @@ Playwright sits **beside** this pipeline for **UI-level** checks (`playwright-te
 
    ```bash
    npm run generate:postman        # openapi.yaml → postman/collection.json
-   npm run generate:postman:local  # spec.json → postman/generated.json
+   npm run generate:postman:local  # spec.json → postman/openapi.generated.json
    ```
 
 Further orientation is in [docs/getting-started.md](docs/getting-started.md).
@@ -139,7 +139,7 @@ Further orientation is in [docs/getting-started.md](docs/getting-started.md).
 
 | Step | Command / action | What you should see |
 |------|------------------|---------------------|
-| **1. Generate a Postman collection** | `npm run generate:postman` or `npm run generate:postman:local` | `postman/collection.json` or `postman/generated.json` updated from OpenAPI. |
+| **1. Generate a Postman collection** | `npm run generate:postman` or `npm run generate:postman:local` | `postman/collection.json` or `postman/openapi.generated.json` updated from OpenAPI. |
 | **2. Run Newman locally** | `npm run test:newman:ci` (JSONPlaceholder `generated.json`) or `npm run test:newman` (main collection) | CLI assertion table; **`newman-report.json`** on disk for the CI script variant. |
 | **3. View reports** | Open **`newman-report.json`** in an editor or JSON viewer; download the **`newman-report`** artifact from a GitHub Actions run | Per-request stats, timings, and failed assertion details. |
 | **4. CI execution** | Open a pull request; watch **API & E2E tests** workflow | Newman job passes or fails with logs; artifact available even when debugging failures. |

@@ -15,7 +15,18 @@ const Converter = require("openapi-to-postmanv2");
 
 const ROOT = path.join(__dirname, "..");
 const SPEC_PATH = path.join(ROOT, "openapi", "spec.json");
-const OUTPUT_PATH = path.join(ROOT, "postman", "generated.json");
+const DEFAULT_OUTPUT_PATH = path.join(ROOT, "postman", "openapi.generated.json");
+
+function getOutputPath() {
+  const cliIdx = process.argv.indexOf("--output");
+  if (cliIdx !== -1 && process.argv[cliIdx + 1]) {
+    return path.resolve(ROOT, process.argv[cliIdx + 1]);
+  }
+  if (process.env.POSTMAN_LOCAL_OUTPUT) {
+    return path.resolve(ROOT, process.env.POSTMAN_LOCAL_OUTPUT);
+  }
+  return DEFAULT_OUTPUT_PATH;
+}
 
 function main() {
   if (!fs.existsSync(SPEC_PATH)) {
@@ -45,9 +56,10 @@ function main() {
       collection.info.schema = "https://schema.getpostman.com/json/collection/v2.1.0/collection.json";
     }
 
-    fs.mkdirSync(path.dirname(OUTPUT_PATH), { recursive: true });
-    fs.writeFileSync(OUTPUT_PATH, `${JSON.stringify(collection, null, 2)}\n`, "utf8");
-    console.log(`Success: Postman collection created at ${OUTPUT_PATH}`);
+    const outputPath = getOutputPath();
+    fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+    fs.writeFileSync(outputPath, `${JSON.stringify(collection, null, 2)}\n`, "utf8");
+    console.log(`Success: Postman collection created at ${outputPath}`);
   });
 }
 

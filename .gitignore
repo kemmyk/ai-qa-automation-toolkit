@@ -8,3 +8,4 @@ playwright/.cache/
 *.log
 .DS_Store
 newman-report.json
+postman/openapi.generated.json

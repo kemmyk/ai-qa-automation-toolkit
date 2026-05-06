@@ -1,7 +1,7 @@
 {
   "info": {
-    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-    "name": "JSONPlaceholder — Posts API",
+    "_postman_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+    "name": "JSONPlaceholder \u2014 Posts API",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "description": {
       "content": "CRUD API tests against JSONPlaceholder typicode /posts.",
@@ -19,8 +19,12 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/posts",
-              "host": ["{{baseUrl}}"],
-              "path": ["posts"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "posts"
+              ]
             }
           },
           "event": [
@@ -56,8 +60,13 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/posts/1",
-              "host": ["{{baseUrl}}"],
-              "path": ["posts", "1"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
             }
           },
           "event": [
@@ -105,8 +114,12 @@
             },
             "url": {
               "raw": "{{baseUrl}}/posts",
-              "host": ["{{baseUrl}}"],
-              "path": ["posts"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "posts"
+              ]
             }
           },
           "event": [
@@ -151,8 +164,13 @@
             },
             "url": {
               "raw": "{{baseUrl}}/posts/1",
-              "host": ["{{baseUrl}}"],
-              "path": ["posts", "1"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
             }
           },
           "event": [
@@ -183,8 +201,13 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/posts/1",
-              "host": ["{{baseUrl}}"],
-              "path": ["posts", "1"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
             }
           },
           "event": [
