@@ -208,9 +208,8 @@ Failing tests in either executed job fail that job and the workflow run for that
 
 The figures below use **SVG placeholders** in [`docs/images/`](docs/images/). Replace them with real **PNG or WebP** exports if you want pixel-perfect captures; keep the same filenames or update the paths in this README.
 
-### Figure 1 — Newman CLI (local or CI log)
+###  1 — Newman CLI (local or CI log)
 
-![Figure 1: Newman CLI showing collection iterations, per-request tests, and summary.](docs/images/fig-newman-cli.svg)
 
 **Caption:** Newman command-line run: each **request** in order, **`pm.test`** results (pass/fail), response timings, and a final **assertions** summary.
 
@@ -225,9 +224,8 @@ The figures below use **SVG placeholders** in [`docs/images/`](docs/images/). Re
 
 ---
 
-### Figure 2 — Newman JSON report (`newman-report.json`)
+###  2 — Newman JSON report (`newman-report.json`)
 
-![Figure 2: Newman JSON export opened in an editor or JSON viewer.](docs/images/fig-newman-json.svg)
 
 **Caption:** Machine-readable **`newman-report.json`** produced by **`npm run test:newman:ci`** (`--reporter-json-export`).
 
@@ -242,9 +240,8 @@ The figures below use **SVG placeholders** in [`docs/images/`](docs/images/). Re
 
 ---
 
-### Figure 3 — GitHub Actions workflow summary
+###  3 — GitHub Actions workflow summary
 
-![Figure 3: GitHub Actions UI listing workflow jobs, status checks, and downloadable artifacts.](docs/images/fig-github-actions.svg)
 
 **Caption:** Pull request checks for **API & E2E tests**: job status, logs, and the **newman-report** artifact.
 
