@@ -12,7 +12,7 @@ module.exports = defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: [["html", { open: "never" }], ["list"]],
   use: {
-    baseURL: "https://jsonplaceholder.typicode.com",
+    baseURL: "https://example.com",
     trace: "on-first-retry",
     screenshot: "only-on-failure",
   },
