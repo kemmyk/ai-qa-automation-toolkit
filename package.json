@@ -16,6 +16,8 @@
     "test:newman:verbose": "node scripts/run-newman.js --verbose",
     "test:newman:ci": "newman run postman/generated.json -e postman/environment.json --reporters cli,json --reporter-json-export newman-report.json",
     "generate:postman": "node scripts/generate-postman.js",
+    "generate:postman:openai": "npm run generate:postman",
+    "generate:postman:openapi": "npm run generate:postman",
     "generate:postman:local": "node scripts/generate-postman-local.js",
     "generate:qa-prompts": "node llm-generator/generate-qa-prompts.js",
     "postinstall": "playwright install chromium"

@@ -24,11 +24,11 @@ function main() {
       console.error(err);
       process.exit(1);
     }
-    if (!result.result || !result.result[0]) {
+    if (!result || !result.output || !result.output[0] || !result.output[0].data) {
       console.error("Conversion produced no collection:", JSON.stringify(result, null, 2));
       process.exit(1);
     }
-    const collection = result.result[0];
+    const collection = result.output[0].data;
     fs.mkdirSync(path.dirname(outPath), { recursive: true });
     fs.writeFileSync(outPath, JSON.stringify(collection, null, 2), "utf8");
     console.log("Wrote", outPath);

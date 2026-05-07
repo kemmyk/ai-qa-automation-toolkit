@@ -1,218 +1,251 @@
 {
-  "info": {
-    "_postman_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
-    "name": "AI QA Toolkit — JSONPlaceholder Posts",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "Same CRUD suite as postman/generated.json; run with npm run test:newman.",
-      "type": "text/plain"
-    }
-  },
   "item": [
     {
-      "name": "posts",
-      "item": [
-        {
-          "name": "GET /posts",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/posts",
-              "host": ["{{baseUrl}}"],
-              "path": ["posts"]
-            }
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Status is 200\", function () {",
-                  "  pm.response.to.have.status(200);",
-                  "});",
-                  "pm.test(\"Response time under 2000ms\", function () {",
-                  "  pm.expect(pm.response.responseTime).to.be.below(2000);",
-                  "});",
-                  "pm.test(\"Response is JSON\", function () {",
-                  "  pm.response.to.be.json;",
-                  "});",
-                  "pm.test(\"Response contains id, title, body\", function () {",
-                  "  const data = pm.response.json();",
-                  "  pm.expect(data).to.be.an(\"array\");",
-                  "  pm.expect(data.length).to.be.above(0);",
-                  "  pm.expect(data[0]).to.include.keys(\"id\", \"title\", \"body\");",
-                  "});"
-                ]
-              }
-            }
-          ]
+      "id": "048860e4-3006-4dbe-a675-9ccd706e17d0",
+      "name": "Pet inventory by status",
+      "request": {
+        "name": "Pet inventory by status",
+        "description": {},
+        "url": {
+          "path": [
+            "store",
+            "inventory"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
         },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null
+      },
+      "response": [
         {
-          "name": "GET /posts/1",
-          "request": {
-            "method": "GET",
-            "header": [],
+          "id": "8e8b02ba-04ff-4b78-b5ea-8321149e05f2",
+          "name": "Map of status codes to quantities",
+          "originalRequest": {
             "url": {
-              "raw": "{{baseUrl}}/posts/1",
-              "host": ["{{baseUrl}}"],
-              "path": ["posts", "1"]
-            }
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Status is 200\", function () {",
-                  "  pm.response.to.have.status(200);",
-                  "});",
-                  "pm.test(\"Response time under 2000ms\", function () {",
-                  "  pm.expect(pm.response.responseTime).to.be.below(2000);",
-                  "});",
-                  "pm.test(\"Response is JSON\", function () {",
-                  "  pm.response.to.be.json;",
-                  "});",
-                  "pm.test(\"Response contains id, title, body\", function () {",
-                  "  const data = pm.response.json();",
-                  "  pm.expect(data).to.include.keys(\"id\", \"title\", \"body\");",
-                  "});"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "POST /posts",
-          "request": {
-            "method": "POST",
+              "path": [
+                "store",
+                "inventory"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
             "header": [
               {
-                "key": "Content-Type",
+                "key": "Accept",
                 "value": "application/json"
               }
             ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"title\": \"test title\",\n  \"body\": \"test body\",\n  \"userId\": 1\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{baseUrl}}/posts",
-              "host": ["{{baseUrl}}"],
-              "path": ["posts"]
-            }
+            "method": "GET",
+            "body": {}
           },
-          "event": [
+          "status": "OK",
+          "code": 200,
+          "header": [
             {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Status is 201\", function () {",
-                  "  pm.response.to.have.status(201);",
-                  "});",
-                  "pm.test(\"Response time under 2000ms\", function () {",
-                  "  pm.expect(pm.response.responseTime).to.be.below(2000);",
-                  "});",
-                  "pm.test(\"Response contains id\", function () {",
-                  "  const data = pm.response.json();",
-                  "  pm.expect(data).to.have.property(\"id\");",
-                  "});"
-                ]
-              }
+              "key": "Content-Type",
+              "value": "application/json"
             }
-          ]
-        },
-        {
-          "name": "PUT /posts/1",
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"title\": \"test title\",\n  \"body\": \"test body\",\n  \"userId\": 1\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{baseUrl}}/posts/1",
-              "host": ["{{baseUrl}}"],
-              "path": ["posts", "1"]
-            }
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Status is 200\", function () {",
-                  "  pm.response.to.have.status(200);",
-                  "});",
-                  "pm.test(\"Response time under 2000ms\", function () {",
-                  "  pm.expect(pm.response.responseTime).to.be.below(2000);",
-                  "});",
-                  "pm.test(\"Updated title exists\", function () {",
-                  "  const data = pm.response.json();",
-                  "  pm.expect(data.title).to.eql(\"test title\");",
-                  "});"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "DELETE /posts/1",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/posts/1",
-              "host": ["{{baseUrl}}"],
-              "path": ["posts", "1"]
-            }
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Status is 200 or 204\", function () {",
-                  "  pm.expect([200, 204]).to.include(pm.response.code);",
-                  "});",
-                  "pm.test(\"Response time under 2000ms\", function () {",
-                  "  pm.expect(pm.response.responseTime).to.be.below(2000);",
-                  "});"
-                ]
-              }
-            }
-          ]
+          ],
+          "body": "{\n  \"available\": 10,\n  \"pending\": 5,\n  \"sold\": 2\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
         }
-      ]
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "10cdb9de-3ee0-4246-b68f-93eb2b058b1c",
+      "name": "Find pet by ID",
+      "request": {
+        "name": "Find pet by ID",
+        "description": {},
+        "url": {
+          "path": [
+            "pet",
+            ":petId"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "disabled": false,
+              "type": "any",
+              "value": "1",
+              "key": "petId",
+              "description": "(Required) ID of pet to return"
+            }
+          ]
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "a85f5ca1-7cb8-4502-9c47-b6443ec89b28",
+          "name": "successful operation",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "pet",
+                ":petId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "1",
+                  "key": "petId",
+                  "description": "(Required) ID of pet to return"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"id\": 1,\n  \"name\": \"doggie\",\n  \"status\": \"available\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "9a45da13-dd73-4891-a10c-63f6a06e00bc",
+          "name": "Invalid ID supplied",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "pet",
+                ":petId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "1",
+                  "key": "petId",
+                  "description": "(Required) ID of pet to return"
+                }
+              ]
+            },
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "text/plain"
+            }
+          ],
+          "body": "",
+          "cookie": [],
+          "_postman_previewlanguage": "text"
+        },
+        {
+          "id": "bcc9227d-287b-4c19-8456-30eca8e346f0",
+          "name": "Pet not found",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "pet",
+                ":petId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "1",
+                  "key": "petId",
+                  "description": "(Required) ID of pet to return"
+                }
+              ]
+            },
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "text/plain"
+            }
+          ],
+          "body": "",
+          "cookie": [],
+          "_postman_previewlanguage": "text"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
     }
   ],
   "event": [],
   "variable": [
     {
-      "key": "baseUrl",
-      "value": "https://jsonplaceholder.typicode.com",
-      "type": "string"
+      "type": "string",
+      "value": "https://petstore.swagger.io/v2",
+      "key": "baseUrl"
     }
-  ]
+  ],
+  "info": {
+    "_postman_id": "859f7d28-41ef-4323-a1a8-a6582aa2abec",
+    "name": "AI QA Toolkit Sample API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Minimal OpenAPI used with Newman and Postman collection generation. Points at Swagger Petstore for runnable smoke requests.\n",
+      "type": "text/plain"
+    }
+  }
 }
